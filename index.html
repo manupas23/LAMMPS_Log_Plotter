@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador Interactivo de Logs de LAMMPS</title>
+    <title>Interactive LAMMPS Log Plotter</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -798,12 +798,12 @@
             <h1>LAMMPS Log Plotter</h1>
         </div>
         <div style="display: flex; align-items: center; gap: 1.5rem;">
-            <button class="theme-toggle-btn" id="theme-toggle" title="Cambiar tema">
+            <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme">
                 <i class="fa-solid fa-sun" id="theme-icon-sun" style="display: none;"></i>
                 <i class="fa-solid fa-moon" id="theme-icon-moon"></i>
             </button>
             <div class="header-info" id="file-info-header">
-                <span>Arrastra o selecciona un log de simulación para empezar</span>
+                <span>Drag and drop a simulation log file to start</span>
             </div>
         </div>
     </header>
@@ -817,14 +817,14 @@
             <!-- File Selector replacement drop area -->
             <div class="drop-zone">
                 <i class="fa-solid fa-file-arrow-up"></i>
-                <p>Cambiar archivo</p>
-                <span>Suelte otro log aquí</span>
+                <p>Change File</p>
+                <span>Drop another log here</span>
                 <input type="file" id="file-input-change" accept=".log,.dat,.lammps,.txt">
             </div>
 
             <!-- Run Selector Module -->
             <div class="module">
-                <span class="module-title">Fase de Simulación</span>
+                <span class="module-title">Simulation Phase</span>
                 <select id="run-selector">
                     <!-- Dynamic runs populated here -->
                 </select>
@@ -832,7 +832,7 @@
 
             <!-- X Axis Module -->
             <div class="module">
-                <span class="module-title">Variable Eje X</span>
+                <span class="module-title">X-Axis Variable</span>
                 <select id="x-axis-selector">
                     <!-- Dynamic variables -->
                 </select>
@@ -840,7 +840,7 @@
 
             <!-- Y Axis Module -->
             <div class="module">
-                <span class="module-title">Variables Eje Y (Multiselección)</span>
+                <span class="module-title">Y-Axis Variables (Multi-select)</span>
                 <div class="variable-list" id="y-axis-list">
                     <!-- Dynamic checkboxes with badges -->
                 </div>
@@ -848,9 +848,9 @@
 
             <!-- Configuration & Axis alignment module -->
             <div class="module">
-                <span class="module-title">Configuración de Ejes</span>
+                <span class="module-title">Axis Configuration</span>
                 <div class="toggle-container">
-                    <span>Eje Y Doble (Escalas Separadas)</span>
+                    <span>Dual Y-Axis (Separate Scales)</span>
                     <label class="switch">
                         <input type="checkbox" id="toggle-dual-y">
                         <span class="slider"></span>
@@ -860,13 +860,13 @@
 
             <!-- Export Buttons -->
             <div class="module">
-                <span class="module-title">Acciones</span>
+                <span class="module-title">Actions</span>
                 <div class="btn-group-row">
                     <button class="btn" id="btn-export-csv">
-                        <i class="fa-solid fa-file-csv"></i> Exportar CSV
+                        <i class="fa-solid fa-file-csv"></i> Export CSV
                     </button>
                     <button class="btn btn-primary" id="btn-autoscale">
-                        <i class="fa-solid fa-maximize"></i> Autoescala
+                        <i class="fa-solid fa-maximize"></i> Autoscale
                     </button>
                 </div>
             </div>
@@ -880,9 +880,9 @@
             <div class="empty-state" id="empty-workspace">
                 <div class="welcome-drop">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <h2>Subir archivo de simulación</h2>
-                    <p>Arrastra tu archivo <b>log.lammps</b>, <b>.log</b> o <b>.dat</b> aquí para analizar los resultados termodinámicos.</p>
-                    <span>Formatos admitidos: .log, .lammps, .dat, .txt</span>
+                    <h2>Upload Simulation Log</h2>
+                    <p>Drag and drop your <b>log.lammps</b>, <b>.log</b> or <b>.dat</b> file here to analyze thermodynamic results.</p>
+                    <span>Supported formats: .log, .lammps, .dat, .txt</span>
                     <input type="file" id="file-input-welcome" accept=".log,.dat,.lammps,.txt">
                 </div>
             </div>
@@ -901,7 +901,7 @@
                     </div>
                     <div>
                         <span id="banner-status-badge" style="font-weight: 500; font-size: 0.85rem; padding: 0.25rem 0.75rem; border-radius: 12px; background: rgba(16, 185, 129, 0.15); color: var(--success);">
-                            <i class="fa-solid fa-check"></i> Parseado con éxito
+                            <i class="fa-solid fa-check"></i> Successfully Parsed
                         </span>
                     </div>
                 </div>
@@ -909,10 +909,10 @@
                 <!-- Tabs -->
                 <div class="tabs">
                     <button class="tab-btn active" data-tab="tab-chart">
-                        <i class="fa-solid fa-chart-area"></i> Gráficos Interactivos
+                        <i class="fa-solid fa-chart-area"></i> Interactive Plots
                     </button>
                     <button class="tab-btn" data-tab="tab-table">
-                        <i class="fa-solid fa-table"></i> Vista de Datos
+                        <i class="fa-solid fa-table"></i> Data Table View
                     </button>
                 </div>
 
@@ -923,20 +923,20 @@
                         <!-- Plot Customizer Row -->
                         <div class="plot-customizer">
                             <div class="customizer-field">
-                                <label for="input-plot-title">Título del Gráfico</label>
-                                <input type="text" id="input-plot-title" placeholder="Propiedades de la simulación">
+                                <label for="input-plot-title">Plot Title</label>
+                                <input type="text" id="input-plot-title" placeholder="Simulation properties">
                             </div>
                             <div class="customizer-field">
-                                <label for="input-x-title">Etiqueta Eje X</label>
-                                <input type="text" id="input-x-title" placeholder="Paso / Tiempo">
+                                <label for="input-x-title">X-Axis Label</label>
+                                <input type="text" id="input-x-title" placeholder="Step / Time">
                             </div>
                             <div class="customizer-field">
-                                <label for="input-y1-title">Etiqueta Eje Y (Izquierdo)</label>
-                                <input type="text" id="input-y1-title" placeholder="Variables Y1">
+                                <label for="input-y1-title">Y1-Axis Label (Left)</label>
+                                <input type="text" id="input-y1-title" placeholder="Y1 variables">
                             </div>
                             <div class="customizer-field">
-                                <label for="input-y2-title">Etiqueta Eje Y (Derecho)</label>
-                                <input type="text" id="input-y2-title" placeholder="Variables Y2" disabled>
+                                <label for="input-y2-title">Y2-Axis Label (Right)</label>
+                                <input type="text" id="input-y2-title" placeholder="Y2 variables" disabled>
                             </div>
                         </div>
 
@@ -946,7 +946,7 @@
 
                     <!-- Quick View Dashboard Module -->
                     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                        <h3 style="font-size: 1.1rem; font-weight: 600;">Panel de Vista Rápida (Variables vs. Step)</h3>
+                        <h3 style="font-size: 1.1rem; font-weight: 600;">Quick View Dashboard (Variables vs. Step)</h3>
                         <div class="quickview-grid" id="quickview-grid">
                             <!-- Dynamically populated with mini-plots -->
                         </div>
@@ -957,9 +957,9 @@
                 <!-- Tab: Table -->
                 <div id="tab-table" class="tab-panel">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <span style="font-size: 0.9rem; color: var(--text-muted);">Mostrando las primeras 200 filas de esta fase</span>
+                        <span style="font-size: 0.9rem; color: var(--text-muted);">Showing the first 200 rows of this phase</span>
                         <button class="btn btn-primary btn-small" id="btn-export-table-csv">
-                            <i class="fa-solid fa-download"></i> Descargar CSV Completo
+                            <i class="fa-solid fa-download"></i> Download Full CSV
                         </button>
                     </div>
                     <div class="table-container">
@@ -984,7 +984,7 @@
     <!-- Spinner overlay -->
     <div class="loading-overlay" id="loading-spinner">
         <div class="spinner"></div>
-        <div class="loading-text" id="loading-status-text">Procesando archivo...</div>
+        <div class="loading-text" id="loading-status-text">Processing file...</div>
     </div>
 
     <!-- JavaScript code -->
@@ -1146,7 +1146,7 @@
             // Try to restore previous file from IndexedDB
             const saved = await loadFileFromDB();
             if (saved && saved.text && saved.name) {
-                showSpinner(`Restaurando última simulación: ${saved.name}...`);
+                showSpinner(`Restoring last simulation: ${saved.name}...`);
                 currentFileName = saved.name;
                 currentFileSize = formatBytes(saved.text.length);
                 
@@ -1163,7 +1163,7 @@
                         sidebarControls.style.display = 'flex';
                         
                         bannerFileName.innerText = currentFileName;
-                        bannerFileDetails.innerText = `${currentFileSize} | ${parsedRuns.length} fase(s) de simulación detectada(s)`;
+                        bannerFileDetails.innerText = `${currentFileSize} | ${parsedRuns.length} simulation phase(s) detected`;
                         fileInfoHeader.innerHTML = `<span style="font-weight: 500;"><i class="fa-solid fa-file-code" style="color: var(--primary);"></i> ${currentFileName} (${currentFileSize})</span>`;
                         
                         populateRunSelector();
@@ -1266,7 +1266,7 @@
             currentFileName = file.name;
             currentFileSize = formatBytes(file.size);
             
-            showSpinner(`Leyendo y parseando ${currentFileName}...`);
+            showSpinner(`Reading and parsing ${currentFileName}...`);
             
             const reader = new FileReader();
             
@@ -1278,7 +1278,7 @@
                     try {
                         parsedRuns = parseLammpsLogOptimized(text);
                         if (parsedRuns.length === 0) {
-                            alert("No se detectaron bloques termodinámicos válidos (ej. variables 'Step', 'Temp', 'Press') en el archivo. Por favor, revisa el formato.");
+                            alert("No valid thermodynamic blocks (e.g. variables 'Step', 'Temp', 'Press') were detected in the file. Please check the file format.");
                             hideSpinner();
                             return;
                         }
@@ -1290,7 +1290,7 @@
                         
                         // Update banners
                         bannerFileName.innerText = currentFileName;
-                        bannerFileDetails.innerText = `${currentFileSize} | ${parsedRuns.length} fase(s) de simulación detectada(s)`;
+                        bannerFileDetails.innerText = `${currentFileSize} | ${parsedRuns.length} simulation phase(s) detected`;
                         fileInfoHeader.innerHTML = `<span style="font-weight: 500;"><i class="fa-solid fa-file-code" style="color: var(--primary);"></i> ${currentFileName} (${currentFileSize})</span>`;
                         
                         // Populate configuration parameters
@@ -1301,7 +1301,7 @@
                         
                         hideSpinner();
                     } catch (error) {
-                        alert("Error al parsear el archivo: " + error.message);
+                        alert("Error parsing file: " + error.message);
                         console.error(error);
                         hideSpinner();
                     }
@@ -1423,7 +1423,7 @@
             if (parsedRuns.length > 1) {
                 const optAll = document.createElement('option');
                 optAll.value = "all";
-                optAll.text = "Todas las fases (Simulación Completa)";
+                optAll.text = "All Phases (Full Simulation)";
                 runSelector.appendChild(optAll);
             }
 
@@ -1431,7 +1431,7 @@
                 const option = document.createElement('option');
                 option.value = index;
                 const stepsCount = run.data.length;
-                option.text = `Fase ${run.id}: ${stepsCount} pasos (${run.headers.slice(0, 3).join(', ')}...)`;
+                option.text = `Phase ${run.id}: ${stepsCount} steps (${run.headers.slice(0, 3).join(', ')}...)`;
                 runSelector.appendChild(option);
             });
         }
@@ -1484,8 +1484,8 @@
             if (isRestoring) {
                 inputPlotTitle.value = localStorage.getItem('last_plot_title') || '';
                 inputXTitle.value = localStorage.getItem('last_x_label') || selectedX;
-                inputY1Title.value = localStorage.getItem('last_y1_label') || "Valores";
-                inputY2Title.value = localStorage.getItem('last_y2_label') || "Valores Secundarios";
+                inputY1Title.value = localStorage.getItem('last_y1_label') || "Values";
+                inputY2Title.value = localStorage.getItem('last_y2_label') || "Secondary Values";
                 
                 const savedDualY = localStorage.getItem('last_dual_y') === 'true';
                 isDualYEnabled = savedDualY;
@@ -1493,11 +1493,11 @@
                 inputY2Title.disabled = !savedDualY;
             } else {
                 inputPlotTitle.value = isCombined 
-                    ? `Simulación Completa - ${currentFileName}` 
-                    : `Fase de Simulación ${parsedRuns[activeRunIndex].id} - ${currentFileName}`;
+                    ? `Full Simulation - ${currentFileName}` 
+                    : `Simulation Phase ${parsedRuns[activeRunIndex].id} - ${currentFileName}`;
                 inputXTitle.value = selectedX;
-                inputY1Title.value = "Valores";
-                inputY2Title.value = "Valores Secundarios";
+                inputY1Title.value = "Values";
+                inputY2Title.value = "Secondary Values";
             }
 
             // Y-Axis variables checklist
@@ -1567,7 +1567,7 @@
                 const axis = yVariableAxisMap[h] || 'y1';
                 badge.innerText = axis === 'y2' ? 'Y2' : 'Y1';
                 if (selectedYVariables.includes(h) && isDualYEnabled) {
-                    badge.title = "Haga clic para cambiar de eje Y (Y1 / Y2)";
+                    badge.title = "Click to toggle Y-axis (Y1 / Y2)";
                 }
 
                 const label = document.createElement('div');
@@ -1589,7 +1589,7 @@
                         item.classList.add('active');
                         if (!selectedYVariables.includes(h)) selectedYVariables.push(h);
                         if (isDualYEnabled) {
-                            badge.title = "Haga clic para cambiar de eje Y (Y1 / Y2)";
+                            badge.title = "Click to toggle Y-axis (Y1 / Y2)";
                         }
                     } else {
                         item.classList.remove('active');
@@ -1661,7 +1661,7 @@
                                 }
                             }
                         }
-                        badge.title = "Haga clic para cambiar de eje Y (Y1 / Y2)";
+                        badge.title = "Click to toggle Y-axis (Y1 / Y2)";
                     } else {
                         badge.innerText = 'Y1';
                         yVariableAxisMap[varName] = 'y1';
@@ -1729,7 +1729,7 @@
             if (parsedRuns.length === 0 || selectedYVariables.length === 0) {
                 document.getElementById('plotly-target').innerHTML = `
                     <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
-                        Selecciona al menos una variable del eje Y en el panel lateral.
+                        Select at least one Y-axis variable in the sidebar.
                     </div>
                 `;
                 quickviewGrid.innerHTML = '';
@@ -1931,7 +1931,7 @@
             if (varsToPlot.length === 0) {
                 gridContainer.innerHTML = `
                     <div style="grid-column: span 2; text-align: center; color: var(--text-muted); padding: 2rem;">
-                        No hay suficientes variables para generar la vista rápida.
+                        Not enough variables to generate quick view.
                     </div>
                 `;
                 return;
@@ -2116,7 +2116,7 @@
                 headers = run.headers;
             }
 
-            showSpinner("Generando CSV...");
+            showSpinner("Generating CSV...");
             
             setTimeout(() => {
                 let csvContent = "data:text/csv;charset=utf-8,";
@@ -2146,7 +2146,7 @@
                 const link = document.createElement("a");
                 link.setAttribute("href", encodedUri);
                 
-                const suffix = isCombined ? "completo" : `fase_${parsedRuns[activeRunIndex].id}`;
+                const suffix = isCombined ? "complete" : `phase_${parsedRuns[activeRunIndex].id}`;
                 const outName = `${currentFileName.replace(/\.[^/.]+$/, "")}_${suffix}.csv`;
                 link.setAttribute("download", outName);
                 document.body.appendChild(link);
