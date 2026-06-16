@@ -4,6 +4,8 @@ An interactive, client-side, zero-dependency thermodynamic log analyzer and plot
 
 Built entirely as a single-page application (SPA) using HTML5, modern vanilla CSS, Plotly.js, FontAwesome, Google Fonts, and IndexedDB.
 
+🚀 **Try the Live App here:** [https://manupas23.github.io/LAMMPS_Log_Plotter/](https://manupas23.github.io/LAMMPS_Log_Plotter/)
+
 ---
 
 ## Key Features 🚀
