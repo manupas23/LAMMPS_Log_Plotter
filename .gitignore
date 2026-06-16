@@ -1,0 +1,17 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# User data / logs
+*.log
+*.lammps
+*.dat
+*.txt
+*.csv
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntuser
+*.user
